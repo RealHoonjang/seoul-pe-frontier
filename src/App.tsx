@@ -95,6 +95,7 @@ export default function App() {
       <footer className="footer no-print">
         <p className="terms">{USAGE_TERMS}</p>
         서울 체육교육 프론티어 교사단 · 성취기준 출처: 2022 개정 체육과 교육과정(교육부 고시 [별책 11])
+        <p className="made-by">Made By 훈장님</p>
       </footer>
       {toastMsg && <div className="toast" role="status">{toastMsg}</div>}
     </>

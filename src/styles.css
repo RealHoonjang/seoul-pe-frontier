@@ -386,6 +386,7 @@ mark { background: var(--mark); color: inherit; border-radius: 2px; padding: 0 1
 .about code { background: var(--surface-2); padding: 1px 6px; border-radius: 4px; font-size: 13px; }
 .footer { text-align: center; color: var(--muted); font-size: 12.5px; padding: 30px 20px 40px; }
 .footer .terms { margin: 0 0 6px; color: var(--ink-2); font-weight: 600; }
+.footer .made-by { margin: 6px 0 0; }
 .actions .terms-note { flex-basis: 100%; margin: 2px 2px 0; font-size: 12.5px; color: var(--muted); }
 
 .loading { padding: 80px 20px; text-align: center; color: var(--muted); }
