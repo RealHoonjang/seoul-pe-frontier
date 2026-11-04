@@ -3,6 +3,9 @@
 2022 개정 체육과 교육과정에 맞춘 수행평가 계획서를 **검색 → 양식 그대로 미리보기 → 내려받기** 하는 웹 프로그램입니다.
 서버 없이 정적 파일만으로 동작하므로 GitHub Pages, Netlify 같은 무료 호스팅에 올릴 수 있습니다.
 
+- 사이트: https://realhoonjang.github.io/seoul-pe-frontier/
+- 배포: `main` 브랜치에 올리면(git push) GitHub Actions가 자동으로 빌드·배포합니다(`.github/workflows/deploy.yml`, 1~2분).
+
 ## 할 수 있는 일
 
 | 기능 | 내용 |
@@ -63,6 +66,6 @@ python tools/import_plan.py 제출폴더 --office 강서양천
 
 3. 마지막에 나오는 **확인 필요** 목록(종목을 못 찾음 등)을 보고 `public/data/plans.json`을 고칩니다.
 4. 더미 자료 지우기: `python tools/import_plan.py --remove-dummy`
-5. `npm run build` 후 `dist/`를 다시 올립니다.
+5. 바뀐 파일을 커밋하고 `git push` 하면 사이트에 자동으로 반영됩니다.
 
 > 같은 파일을 다시 넣으면 같은 항목을 덮어씁니다(파일 이름으로 구분).
