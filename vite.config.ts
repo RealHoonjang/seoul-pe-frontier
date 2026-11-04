@@ -1,7 +1,7 @@
 import { defineConfig, loadEnv, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 
-const TITLE = '체육 평가계획 나눔터';
+const TITLE = '학교 체육 수업 길잡이';
 const DESC = '2022 개정 체육과 교육과정 수행평가 계획서를 교육과정·종목·평가 방법·에듀테크로 찾고, 양식 그대로 미리 본 뒤 한글·엑셀로 내려받으세요.';
 
 /** 카카오톡·SNS 공유 미리보기(Open Graph) 태그를 넣는다.

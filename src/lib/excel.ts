@@ -41,7 +41,7 @@ function levelFormula(st: ScoringTable, rec: string, gender: string): string | n
 export async function buildWorkbook(plan: EvalPlan, stdMap: Map<string, Standard>): Promise<Blob> {
   const ExcelJS: ExcelJS = (await import('exceljs')).default as unknown as ExcelJS;
   const wb = new ExcelJS.Workbook();
-  wb.creator = '체육 평가계획 나눔터';
+  wb.creator = '학교 체육 수업 길잡이';
 
   // ① 채점기준
   const ws = wb.addWorksheet('채점기준');

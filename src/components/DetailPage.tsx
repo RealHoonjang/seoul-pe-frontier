@@ -32,9 +32,9 @@ export default function DetailPage({ id }: { id: string }) {
   const toks = useMemo(() => tokens(paramsToQuery(lastSearchHash().split('?')[1] ?? '').q), []);
 
   useEffect(() => {
-    if (me) document.title = `${me.plan.title} · 체육 평가계획 나눔터`;
+    if (me) document.title = `${me.plan.title} · 학교 체육 수업 길잡이`;
     return () => {
-      document.title = '체육 평가계획 나눔터';
+      document.title = '학교 체육 수업 길잡이';
     };
   }, [me]);
 

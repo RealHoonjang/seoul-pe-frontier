@@ -75,7 +75,7 @@ export default function App() {
           <a className="logo" href={lastSearchHash()}>
             <LogoMark />
             <span>
-              체육 평가계획 나눔터
+              학교 체육 수업 길잡이
               <small>2022 개정 교육과정 수행평가 계획서 검색·미리보기·내려받기</small>
             </span>
           </a>

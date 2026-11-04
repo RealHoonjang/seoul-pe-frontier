@@ -35,7 +35,7 @@ d.arc([c[0] - 13, c[1] - 24, c[0] + 13, c[1] + 24], 90, 270, fill=BRAND, width=4
 d.arc([c[0] - 13, c[1] - 24, c[0] + 13, c[1] + 24], 270, 90, fill=BRAND, width=4)
 d.text((lx + 96, ly + 14), '서울 체육교육 프론티어 교사단', font=ImageFont.truetype(str(REG), 34), fill=SOFT)
 
-d.text((80, 215), '체육 평가계획 나눔터', font=ImageFont.truetype(str(BOLD), 92), fill=WHITE)
+d.text((80, 215), '학교 체육 수업 길잡이', font=ImageFont.truetype(str(BOLD), 92), fill=WHITE)
 d.text((84, 345), '2022 개정 교육과정 수행평가 계획서', font=ImageFont.truetype(str(REG), 44), fill=SOFT)
 d.text((84, 405), '검색 · 미리보기 · 한글/엑셀 내려받기', font=ImageFont.truetype(str(REG), 44), fill=SOFT)
 
