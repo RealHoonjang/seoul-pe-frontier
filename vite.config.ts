@@ -1,5 +1,7 @@
 import { defineConfig, loadEnv, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
+import { createHash } from 'node:crypto';
+import { readFileSync } from 'node:fs';
 
 const TITLE = '학교 체육 수업 길잡이';
 const DESC = '2022 개정 체육과 교육과정 수행평가 계획서를 교육과정·종목·평가 방법·에듀테크로 찾고, 양식 그대로 미리 본 뒤 한글·엑셀로 내려받으세요.';
@@ -10,6 +12,8 @@ const DESC = '2022 개정 체육과 교육과정 수행평가 계획서를 교�
 function shareTags(siteUrl: string): Plugin {
   const base = siteUrl.replace(/\/+$/, '');
   const abs = (p: string) => (base ? `${base}/${p}` : p);
+  // 그림 내용이 바뀌면 주소 끝(?v=…)도 바뀌어 카카오톡이 새 그림을 다시 가져간다
+  const ver = createHash('md5').update(readFileSync('public/og-image.png')).digest('hex').slice(0, 8);
   return {
     name: 'share-tags',
     transformIndexHtml() {
@@ -23,7 +27,7 @@ function shareTags(siteUrl: string): Plugin {
         meta('property', 'og:site_name', TITLE),
         meta('property', 'og:title', TITLE),
         meta('property', 'og:description', DESC),
-        meta('property', 'og:image', abs('og-image.png')),
+        meta('property', 'og:image', abs(`og-image.png?v=${ver}`)),
         meta('property', 'og:image:width', '1200'),
         meta('property', 'og:image:height', '630'),
         meta('property', 'og:locale', 'ko_KR'),
