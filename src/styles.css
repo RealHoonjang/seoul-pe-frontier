@@ -136,7 +136,7 @@ mark { background: var(--mark); color: inherit; border-radius: 2px; padding: 0 1
 .hero p { margin: 0; color: var(--muted); }
 .searchbar { display: flex; gap: 8px; }
 .searchbox {
-  flex: 1; display: flex; align-items: center; gap: 8px;
+  flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px;
   background: var(--surface); border: 1.5px solid var(--line-strong); border-radius: 12px; padding: 0 14px;
   box-shadow: var(--shadow);
 }
@@ -420,6 +420,8 @@ mark { background: var(--mark); color: inherit; border-radius: 2px; padding: 0 1
   .actions .sep { display: none; }
   .row3 { grid-template-columns: 1fr 1fr; }
   .lvgrid { grid-template-columns: 26px 1fr 1fr 48px 48px; }
+  .searchbox { padding: 0 10px; }
+  .searchbar .filter-toggle { padding: 8px 10px; }
 }
 
 /* ---------- 인쇄 (PDF로 저장) ---------- */
