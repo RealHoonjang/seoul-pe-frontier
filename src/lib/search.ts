@@ -42,18 +42,45 @@ export const FACETS: Facet[] = [
 
 export const AXES: Axis[] = ['교육과정', '종목', '평가', '에듀테크'];
 
+/** 학교급별로 차례대로 보여 줄 기본 조건. 앞 단계를 고르면 다음 단계가 열린다(type 은 영역을 고른 뒤) */
+export const GUIDE_STEPS: Record<string, string[]> = {
+  초등학교: ['gr', 'area', 'type', 'sport'],
+  중학교: ['gr', 'area', 'type', 'sport'],
+  고등학교: ['course', 'gr', 'area', 'type', 'sport'],
+  전체: ['area', 'sport'],
+};
+
+/** '상세 조건'에 접어 두는 조건 */
+export const ADVANCED = ['etype', 'who', 'mode', 'measure', 'use', 'device', 'app', 'std'];
+
+export const facetByKey = (k: string) => FACETS.find((f) => f.key === k)!;
+
 export type SortKey = 'recent' | 'grade' | 'sport';
 
 export interface Query {
   q: string;
   f: Record<string, string[]>;
   sort: SortKey;
+  /** 학교급을 고르지 않고 전체를 둘러보는 중 */
+  all?: boolean;
 }
 
 export const emptyQuery = (): Query => ({ q: '', f: {}, sort: 'recent' });
 
+/** 학교급에 따라 달라지는 조건 — 학교급을 바꾸면 지운다 */
+export const LEVEL_BOUND = ['gr', 'course', 'type', 'std'];
+
+export function setLevel(q: Query, level: string | null): Query {
+  const f = { ...q.f };
+  for (const k of LEVEL_BOUND) delete f[k];
+  if (level) f.lv = [level];
+  else delete f.lv;
+  return { ...q, f, all: !level };
+}
+
 export function queryToParams(q: Query): string {
   const sp = new URLSearchParams();
+  if (q.all && !q.f.lv?.length) sp.set('all', '1');
   if (q.q.trim()) sp.set('q', q.q.trim());
   for (const [k, vs] of Object.entries(q.f)) for (const v of vs) sp.append(k, v);
   if (q.sort !== 'recent') sp.set('sort', q.sort);
@@ -64,6 +91,7 @@ export function paramsToQuery(s: string): Query {
   const sp = new URLSearchParams(s);
   const q = emptyQuery();
   q.q = sp.get('q') ?? '';
+  q.all = sp.get('all') === '1';
   const sort = sp.get('sort');
   if (sort === 'grade' || sort === 'sport') q.sort = sort;
   for (const f of FACETS) {

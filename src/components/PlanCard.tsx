@@ -3,19 +3,23 @@ import { useApp } from '../ctx';
 import { Hl, snippet } from './Hl';
 import { IconCheck } from './Icons';
 import { planText } from '../lib/data';
+import { TYPE_PARENT } from '../lib/labels';
 
 interface Props {
   x: Indexed;
   toks: string[];
-  onFacet: (key: string, value: string) => void;
 }
 
-export default function PlanCard({ x, toks, onFacet }: Props) {
+/** 결과 카드: 학년·종목·제목·평가 의도와 한 줄 요약만. 성취기준·도구 등 자세한 내용은 상세 화면에서 */
+export default function PlanCard({ x, toks }: Props) {
   const { cart, toggleCart } = useApp();
   const p = x.plan;
   const picked = cart.includes(p.id);
   const head = `${p.title} ${p.intent}`.toLowerCase();
   const snip = toks.length && !toks.every((t) => head.includes(t)) ? snippet(planText(p, x.stds), toks) : null;
+  // 세부 유형은 가장 구체적인 것 하나만 (예: 영역형)
+  const sub = x.types.find((t) => TYPE_PARENT[t]) ?? x.types[0];
+  const summary = [x.areas.join('·'), sub, p.methods.types.join('·')].filter(Boolean).join(' · ');
   const tools = [...p.digital.devices, ...p.digital.apps];
 
   return (
@@ -45,32 +49,10 @@ export default function PlanCard({ x, toks, onFacet }: Props) {
       </h3>
       <p className="intent"><Hl text={p.intent} toks={toks} /></p>
       {snip && <p className="snippet"><Hl text={snip} toks={toks} /></p>}
-      <div className="tags">
-        {[...x.areas, ...x.types.filter((t) => !['기술형', '전략형', '생태형'].includes(t) || x.types.length === 1)].map((t) => (
-          <button key={t} className="tag" onClick={() => onFacet(x.areas.includes(t) ? 'area' : 'type', t)} title={`'${t}' 조건으로 찾기`} style={{ cursor: 'pointer' }}>
-            {t}
-          </button>
-        ))}
-        {p.standards.map((c) => (
-          <a key={c} className="tag std" href={`#/std/${encodeURIComponent(c)}`} title={x.stds.find((s) => s.code === c)?.text}>
-            {c}
-          </a>
-        ))}
-      </div>
-      <div className="tags">
-        {p.methods.types.map((t) => <span key={t} className="tag">{t}</span>)}
-        {tools.slice(0, 4).map((t) => (
-          <button key={t} className="tag tool" style={{ cursor: 'pointer' }} onClick={() => onFacet(p.digital.devices.includes(t) ? 'device' : 'app', t)} title={`'${t}' 조건으로 찾기`}>
-            {t}
-          </button>
-        ))}
-        {tools.length > 4 && <span className="tag">+{tools.length - 4}</span>}
-      </div>
+      <p className="card-sum">{summary}</p>
       <div className="meta">
-        <span>{p.author.office}</span>
-        <span>{p.author.school}</span>
-        <span>{p.author.name}</span>
-        <span style={{ marginLeft: 'auto' }}>{p.updated}</span>
+        <span>{tools.length ? `디지털: ${tools.slice(0, 2).join(', ')}${tools.length > 2 ? ` 외 ${tools.length - 2}` : ''}` : '디지털 활용 없음'}</span>
+        <span style={{ marginLeft: 'auto' }}>{p.author.school}</span>
       </div>
     </article>
   );
